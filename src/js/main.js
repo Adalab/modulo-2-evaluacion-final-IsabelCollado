@@ -1,51 +1,45 @@
-"use strict";
+'use strict';
 
-console.log(">> Ready :");
+console.log('>> Ready :');
 
 //Variables
 
-const inputElement = document.querySelector(".js_input_element");
+const inputElement = document.querySelector('.js_input_element');
+const searchBtn = document.querySelector('.js_search');
+const resetBtn = document.querySelector('.js_reset_btn');
+const listFavourite = document.querySelector('.js_favorite');
+const listCocktail = document.querySelector('.js_list_cocktail');
+const margatitaUrl =
+  'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita';
 
-const searchBtn = document.querySelector(".js_search");
-
-const resetBtn = document.querySelector(".js_reset_btn");
-const ulFav = document.querySelector(".js_favorite");
-const listCocktel = document.querySelector(".js_list_cocktail");
-const url =
-  "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita";
-
-let listCocktelData = [];
+let listCocktailData = [];
 
 //Fetch obtener los datos
 
-fetch(url)
+fetch(margatitaUrl)
   .then((response) => response.json())
   .then((data) => {
-    listCocktelData = data.cocktels;
-    renderCocktelList(listCocktelData);
+    console.log(data);
+    listCocktailData = data.drinks;
+    renderCocktailsLis(listCocktailData);
   });
 
-//Pinta todos los elementos de la lista
+function renderCocktailsLis(listCocktailData) {
+  //listCocktail.innerHTML = "";
 
-function renderCocktelList(listCocktelData) {
-  for (const cocktel of listCocktelData) {
-    listCocktel.innerHTML += renderCocktel(cocktel);
+  for (const cocktail of listCocktailData) {
+    listCocktail.innerHTML += renderCocktails(cocktail);
   }
 }
 
-//Pintar un elemento de la lista
+//pintar la lista
 
-function renderCocktel(cocktel) {
-  let html = `<li>
-
-<article class= 'cocktel js_li_cocktel'>
-<h3 class= 'cocktel_title'>${item.name} </h3>
-<img class= 'img_cocktel' src=${url} alt= 'cocktel'/>
-<ul class= 
-</article>
-</li>`;
-
+function renderCocktails(cocktail) {
+  let html = `<li class="cocktail_list">
+        <article>
+            <img src="${cocktail.strDrinkThumb}" alt="Cocktail img" class="cocktail_img">
+            <h3 class="cocktail_title">${cocktail.strDrink}</h3>
+        </article>
+    </li> `;
   return html;
 }
-
-ev.currentTarget.classList.toggle("selected");

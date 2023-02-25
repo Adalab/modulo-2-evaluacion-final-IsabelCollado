@@ -1,16 +1,19 @@
 'use strict';
 
-//Variables
+//Variables y constantes
 
 const inputElement = document.querySelector('.js_input_element');
 const searchBtn = document.querySelector('.js_search');
-//const resetBtn = document.querySelector('.js_reset_btn');
+const resetBtn = document.querySelector('.js_reset_btn');
 const listFavourite = document.querySelector('.js_favorite');
 const listCocktail = document.querySelector('.js_list_cocktail');
 const margatitaUrl =
   'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita';
 
+//array para guardar los cocteles de la lista
 let listCocktailData = [];
+
+//array para guardar los cocteles de favoritos
 let listFavouriteData = [];
 
 //Fetch obtener los datos de la lista de margaritas al abrir la página.
@@ -22,13 +25,14 @@ fetch(margatitaUrl)
     renderCocktails(listCocktailData);
   });
 
-//creo una funcion donde hacer click en burcar la usuaria pueda buscar en la API cualquier coctel.
+//creo una funcion donde hacer click en burcar, la usuaria pueda buscar en la API cualquier coctel.
 
 function handleClickBtn(ev) {
+  //para que no refresque la página
   ev.preventDefault();
-  const selectCocktails = inputElement.value.toLowerCase();
+  const inputValue = inputElement.value.toLowerCase();
   fetch(
-    `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${selectCocktails}`
+    `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputElement.value}`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -37,51 +41,88 @@ function handleClickBtn(ev) {
       renderCocktails(listCocktailData);
     });
 }
-//creo un funcion que mediante un for...of recorremos la lista de los cocteles.
 
-function renderCocktails(cocktails) {
-  for (const cocktail of cocktails) {
-    listCocktail.innerHTML += `<li>
-    <article class='cocktail js-li-cocktail' id=${cocktail.idDrink}>
-        <img src="${cocktail.strDrinkThumb}" alt="Cocktail img" class="cocktail_img">
-        <h3 class="cocktail_title">${cocktail.strDrink}</h3>
-        <ul class="cocktail__colorslist">`;
+function handleClickBtnReset(ev) {
+  ev.preventDefault();
+  if (listFavouriteData !== null) {
+    listFavouriteData = [];
+    listFavourite.innerHTML = '';
+    inputElement.value = '';
+  }
+}
+
+//funcion para recoger los diferentes cocteles y pintarlos
+//Y si no tuviese foto saldría una por defecto.
+function renderCocktails(listCocktailData) {
+  for (const cocktail of listCocktailData) {
+    if (cocktail.strDrinkThumb) {
+      listCocktail.innerHTML += renderStructCocktails(cocktail);
+    } else {
+      let html = `<li class="js_liElement selected" id=${cocktail.idDrink}><h2 class="js_title">${cocktail.strDrink}</h2></li>
+  <img src= https://via.placeholder.com/210x295/ffffff/666666/?text=TV /> title="${cocktail.strDrink} class="cocktail_img" />`;
+
+      return html;
+    }
   }
   addEventToCocktails();
 }
+//creo funcion para la estructura del li html (ya que se repite) y los pinte.
 
-function handleClickElementLi(ev) {
+function renderStructCocktails(cocktail) {
+  let html = `<li class="js_liElement" id=${cocktail.idDrink}>
+  <h2 class="js_title">${cocktail.strDrink}</h2>
+  <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
+  </li>`;
+  return html;
+}
+
+//guardar los favoritos
+//Creamos la función manejadora del evento al hacer click sobre la imagen.
+
+function handleClick(ev) {
   const idSelected = ev.currentTarget.id;
-  const slcCocktails = listCocktailData.find(
-    (cocktail) => cocktail.strDrink === idSelected
+
+  //find devuelve el primer elemento
+  const selectedCocktail = listCocktailData.find(
+    (cocktail) => cocktail.idDrink === idSelected
   );
-  const indexCocktail = listFavouriteData.findInde(
-    (cocktail) => cocktail.id === idSelected
+
+  //findIndex devuelve la posición donde está un elemento o -1 si es que no está
+  const indexCocktail = listFavouriteData.findIndex(
+    (cocktail) => cocktail.idDrink === idSelected
   );
+  //aquí se comprueba si tiene
   if (indexCocktail === -1) {
-    ev.currentTarget.classList.add('select');
-    listFavouriteData.push(slcCocktails);
+    //push para guardar en el listado
+    ev.currentTarget.classList.add('selected');
+    listFavouriteData.push(selectedCocktail);
   } else {
-    ev.currentTarget.classList.remove('select');
+    //splice elimina el elemento de desde una posición.
+    ev.currentTarget.classList.remove('selected');
     listFavouriteData.splice(indexCocktail, 1);
   }
 
+  //pintar favoritos
   renderListFavourite(listFavouriteData);
-  localStorage.setItem('itemCocktails', JSON.stringify(listFavouriteData));
 }
+
+// funcion para guardar favoritos
 
 function renderListFavourite(favCocktails) {
   listFavourite.innerHTML = '';
-  for (const favCocktail of favCocktails) {
-    listFavourite.innerHTML += renderCocktails(favCocktail);
+  for (const Cocktail of favCocktails) {
+    listFavourite.innerHTML += renderStructCocktails(Cocktail);
   }
 }
-//Creamos la función que va a sacar todos los LI (mediante bucle)
+
+//esta funcion nos da la informacion de cada li.
 function addEventToCocktails() {
-  const elementLi = document.querySelectorAll('.js-elementLi');
-  for (const li of elementLi) {
-    li.addEventListener('click', handleClickElementLi);
+  const lielementList = document.querySelectorAll('.js_liElement');
+  for (const li of lielementList) {
+    li.addEventListener('click', handleClick);
   }
 }
+
 //evento asociado a la busqueda de la usuaria
 searchBtn.addEventListener('click', handleClickBtn);
+resetBtn.addEventListener('click', handleClickBtnReset);

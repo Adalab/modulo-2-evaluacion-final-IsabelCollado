@@ -2,12 +2,12 @@
 
   <section class="search js_search">
       <form class="#">
-        <label for="input">Buscador:</label>
+        <label for="input" class="search_label">Buscador:</label>
       
           <input type="text" id="input" class="js_input_element       input-element" placeholder="Ej: margarita">
         </label>
           <label for="search">
-          <input type="button" value="buscar" id="search" class="js_search search-btn">
+          <input type="button" value="Buscar" id="search" class="js_search search-btn">
         </label>
         <label for="search">
           <input type="button" id="reset" value="Reset" class="js_reset_btn btn-reset">
@@ -15,15 +15,18 @@
       </form>
   </section>
   
-  
+<div class="one_section">
   <section class="favourites">
     <h2 class="h2_title">Mis Cócteles Favoritos</h2>
     <ul class="favorite_cocktail js_favorite"></ul>
+    <button class="reset_fav js_reset_fav hidden"><img src=./assets/images/36_104857.png class="img_trash " alt="image-trash"/></button>
   </section>
-  
+</div>
+<div class="two_section">
   <section class="list">
-    <h2>Lista Cócteles</h2>
+    <h2 class="list_title">Lista Cócteles</h2>
     <ul class="list_cocktail js_list_cocktail"></ul>
   </section>
+</div>
   
   </main>

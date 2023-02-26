@@ -5,6 +5,7 @@
 const inputElement = document.querySelector('.js_input_element');
 const searchBtn = document.querySelector('.js_search');
 const resetBtn = document.querySelector('.js_reset_btn');
+const resetBtnFav = document.querySelector('.js_reset_fav');
 const listFavourite = document.querySelector('.js_favorite');
 const listCocktail = document.querySelector('.js_list_cocktail');
 const margatitaUrl =
@@ -50,7 +51,6 @@ function handleClickBtn(ev) {
     .then((response) => response.json())
     .then((data) => {
       listCocktailData = data.drinks;
-      //console.log(listCocktailData);
       inputElement.value = '';
       renderResultCocktail(listCocktail);
     });
@@ -87,12 +87,13 @@ function renderFavorite(listFavourite) {
   }
 }
 
+//function handleClickFavouriteX(ev) {}
+
 function handleClick(ev) {
   const idSelectedCocktail = ev.currentTarget.id;
   const selectedCocktail = listCocktailData.find(
     (cocktail) => cocktail.idDrink === idSelectedCocktail
   );
-  //console.log(selectedCocktail);
   const indexCocktail = listFavouriteData.findIndex(
     (cocktail) => cocktail.idDrink === idSelectedCocktail
   );
@@ -119,18 +120,25 @@ function addEventToCocktails() {
   }
 }
 
-//funcion boton reset, debe quitar elementos de lista favoritos y dejar pagina por defecto
+//funcion boton reset, debe quitar elementos del input donde la usuaria busca su cocktail.
 function handleClickBtnReset(ev) {
   ev.preventDefault();
-  if (listFavouriteData !== null) {
-    listFavouriteData = [];
-    listFavourite.innerHTML = '';
-    localStorage.removeItem('favoriteCocktail');
-    inputElement.value = '';
-    location.reload(); //lleva la pagina a default.
-  }
+  inputElement.value = '';
+  location.reload(); //lleva la pagina a default.
+}
+
+//funcion para que al dar a la basurita se elimine la lista de favoritos y queda la pagina por defecto
+function handleClickResetBtnFav(ev) {
+  ev.preventDefault();
+  listFavouriteData = [];
+  listFavourite.innerHTML = '';
+  localStorage.removeItem('favoriteCocktail');
+  inputElement.value = '';
+  location.reload();
 }
 
 //eventos
 searchBtn.addEventListener('click', handleClickBtn);
 resetBtn.addEventListener('click', handleClickBtnReset);
+
+resetBtnFav.addEventListener('click', handleClickResetBtnFav);

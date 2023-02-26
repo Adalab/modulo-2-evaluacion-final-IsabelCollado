@@ -16,102 +16,99 @@ let listCocktailData = [];
 //array para guardar los cocteles de favoritos
 let listFavouriteData = [];
 
+//buscar en localstorage
+
+const cocktailStored = JSON.parse(localStorage.getItem('favoriteCocktail'));
+if (cocktailStored) {
+  listFavouriteData = cocktailStored;
+  renderFavorite(listFavourite);
+}
+
 //Fetch obtener los datos de la lista de margaritas al abrir la página.
 
-fetch(margatitaUrl)
-  .then((response) => response.json())
-  .then((data) => {
-    listCocktailData = data.drinks;
-    renderListCocktails(listCocktailData);
-  });
-
-//creo una funcion donde hacer click en burcar, la usuaria pueda buscar en la API cualquier coctel.
+const listDataStored = JSON.parse(localStorage.getItem('coctail'));
+if (listDataStored) {
+  listCocktailData = listDataStored;
+  renderResultCocktail(listCocktail);
+} else {
+  fetch(margatitaUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      listCocktailData = data.drinks;
+      renderResultCocktail(listCocktail);
+      localStorage.setItem('coctail', JSON.stringify(listCocktailData));
+    });
+}
+//creo una funcion manejadora del bonton buscar, hacer click la usuaria pueda buscar en la API cualquier coctel.
 //para que no refresque la página
 
 function handleClickBtn(ev) {
   ev.preventDefault();
-  const inputValue = inputElement.value.toLowerCase();
   fetch(
-    `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`
+    `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputElement.value}`
   )
     .then((response) => response.json())
     .then((data) => {
       listCocktailData = data.drinks;
-      listCocktail.innerHTML = '';
-      renderListCocktails(listCocktailData);
+      //console.log(listCocktailData);
+      inputElement.value = '';
+      renderResultCocktail(listCocktail);
     });
 }
 
-//funcion boton reset, debe quitar elementos de lista favoritos y dejarn pagina por defecto
-function handleClickBtnReset(ev) {
-  ev.preventDefault();
-  // eslint-disable-next-line no-undef
-  inputElement.value = '';
-  listFavouriteData = [];
-  renderListFavourite(listFavouriteData);
-  renderListCocktails(listCocktailData);
-}
-
-function renderListCocktails(listCocktailData) {
+//función para pintar el resultado en html.
+function renderResultCocktail(listCocktail) {
+  listCocktail.innerHTML = '';
   for (const cocktail of listCocktailData) {
     if (cocktail.strDrinkThumb) {
-      listCocktail.innerHTML += renderStructCocktails(cocktail);
+      listCocktail.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
+    <h2 class="js_title">${cocktail.strDrink}</h2>
+    <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
+    </li>`;
     } else {
-      let html = `<li class="js_liElement selected" id=${cocktail.idDrink}><h2 class="js_title">${cocktail.strDrink}</h2></li>
-  <img src= https://via.placeholder.com/210x295/ffffff/666666/?text=TV /> title="${cocktail.strDrink} class="cocktail_img" />`;
-
-      return html;
+      listCocktail.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
+    <h2 class="js_title">${cocktail.strDrink}</h2>
+    <img src="https://www.drinksco.es/blog/assets/uploads/sites/2/2020/05/cocktail-3327242_1920-1170x780.jpg" class="cocktail_img" title="${cocktail.strDrink}"/>
+    </li>`;
     }
+    addEventToCocktails();
   }
-  addEventToCocktails();
-}
-//creo funcion para la estructura del li html (ya que se repite) y los pinte.
-
-function renderStructCocktails(cocktail) {
-  let html = `<li class="js_liElement " id=${cocktail.idDrink}>
-  <h2 class="js_title">${cocktail.strDrink}</h2>
-  <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
-  </li>`;
-  return html;
 }
 
-//guardar los favoritos
-//Creamos la función manejadora del evento al hacer click sobre la imagen.
+//funcion lista favoritos.
+
+function renderFavorite(listFavourite) {
+  listFavourite.innerHTML = '';
+  for (const cocktail of listFavouriteData) {
+    listFavourite.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
+    <h2 class="js_title">${cocktail.strDrink}</h2>
+    <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
+    </li>`;
+  }
+}
 
 function handleClick(ev) {
-  const idSelected = ev.currentTarget.id;
-
-  //find devuelve el primer elemento
+  const idSelectedCocktail = ev.currentTarget.id;
   const selectedCocktail = listCocktailData.find(
-    (cocktail) => cocktail.idDrink === idSelected
+    (cocktail) => cocktail.idDrink === idSelectedCocktail
   );
-
-  //findIndex devuelve la posición donde está un elemento o -1 si es que no está
+  //console.log(selectedCocktail);
   const indexCocktail = listFavouriteData.findIndex(
-    (cocktail) => cocktail.idDrink === idSelected
+    (cocktail) => cocktail.idDrink === idSelectedCocktail
   );
-  //aquí se comprueba si tiene
+  //aquí se comprueba si esta en fav, -1 es no.
   if (indexCocktail === -1) {
     //push para guardar en el listado
     ev.currentTarget.classList.add('selected');
     listFavouriteData.push(selectedCocktail);
   } else {
-    //splice elimina el elemento de desde una posición.
+    //splice elimina de fav.
     ev.currentTarget.classList.remove('selected');
     listFavouriteData.splice(indexCocktail, 1);
   }
+  renderFavorite(listFavourite);
 
-  //pintar favoritos
-  renderListFavourite(listFavouriteData);
-}
-
-// funcion para guardar favoritos
-
-function renderListFavourite(favCocktails) {
-  listFavourite.innerHTML = '';
-  for (const Cocktail of favCocktails) {
-    listFavourite.innerHTML += renderStructCocktails(Cocktail);
-  }
+  localStorage.setItem('favoriteCocktail', JSON.stringify(listFavouriteData));
 }
 
 //esta funcion nos da la informacion de cada li.
@@ -122,6 +119,18 @@ function addEventToCocktails() {
   }
 }
 
-//evento asociado a la busqueda de la usuaria
+//funcion boton reset, debe quitar elementos de lista favoritos y dejar pagina por defecto
+function handleClickBtnReset(ev) {
+  ev.preventDefault();
+  if (listFavouriteData !== null) {
+    listFavouriteData = [];
+    listFavourite.innerHTML = '';
+    localStorage.removeItem('favoriteCocktail');
+    inputElement.value = '';
+    location.reload(); //lleva la pagina a default.
+  }
+}
+
+//eventos
 searchBtn.addEventListener('click', handleClickBtn);
 resetBtn.addEventListener('click', handleClickBtnReset);

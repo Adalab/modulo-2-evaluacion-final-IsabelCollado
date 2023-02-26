@@ -22,38 +22,37 @@ fetch(margatitaUrl)
   .then((response) => response.json())
   .then((data) => {
     listCocktailData = data.drinks;
-    renderCocktails(listCocktailData);
+    renderListCocktails(listCocktailData);
   });
 
 //creo una funcion donde hacer click en burcar, la usuaria pueda buscar en la API cualquier coctel.
+//para que no refresque la página
 
 function handleClickBtn(ev) {
-  //para que no refresque la página
   ev.preventDefault();
   const inputValue = inputElement.value.toLowerCase();
   fetch(
-    `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputElement.value}`
+    `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`
   )
     .then((response) => response.json())
     .then((data) => {
       listCocktailData = data.drinks;
       listCocktail.innerHTML = '';
-      renderCocktails(listCocktailData);
+      renderListCocktails(listCocktailData);
     });
 }
 
+//funcion boton reset, debe quitar elementos de lista favoritos y dejarn pagina por defecto
 function handleClickBtnReset(ev) {
   ev.preventDefault();
-  if (listFavouriteData !== null) {
-    listFavouriteData = [];
-    listFavourite.innerHTML = '';
-    inputElement.value = '';
-  }
+  // eslint-disable-next-line no-undef
+  inputElement.value = '';
+  listFavouriteData = [];
+  renderListFavourite(listFavouriteData);
+  renderListCocktails(listCocktailData);
 }
 
-//funcion para recoger los diferentes cocteles y pintarlos
-//Y si no tuviese foto saldría una por defecto.
-function renderCocktails(listCocktailData) {
+function renderListCocktails(listCocktailData) {
   for (const cocktail of listCocktailData) {
     if (cocktail.strDrinkThumb) {
       listCocktail.innerHTML += renderStructCocktails(cocktail);
@@ -69,7 +68,7 @@ function renderCocktails(listCocktailData) {
 //creo funcion para la estructura del li html (ya que se repite) y los pinte.
 
 function renderStructCocktails(cocktail) {
-  let html = `<li class="js_liElement" id=${cocktail.idDrink}>
+  let html = `<li class="js_liElement " id=${cocktail.idDrink}>
   <h2 class="js_title">${cocktail.strDrink}</h2>
   <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
   </li>`;

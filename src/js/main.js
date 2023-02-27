@@ -17,7 +17,7 @@ let listCocktailData = [];
 //array para guardar los cocteles de favoritos
 let listFavouriteData = [];
 
-//buscar en localstorage
+//buscar y guardar listado fav en localstorage
 
 const cocktailStored = JSON.parse(localStorage.getItem('favoriteCocktail'));
 if (cocktailStored) {
@@ -56,21 +56,25 @@ function handleClickBtn(ev) {
     });
 }
 
-//función para pintar el resultado en html.
+//función para recorrer y pintar los li  en html y si no encuentra la imagen pone una por defecto.
 function renderResultCocktail(listCocktail) {
   listCocktail.innerHTML = '';
   for (const cocktail of listCocktailData) {
-    if (cocktail.strDrinkThumb) {
+    const indexCocktail = listFavouriteData.findIndex(
+      (cocktailFav) => cocktail.idDrink === cocktailFav.idDrink
+    );
+    if (indexCocktail === -1) {
       listCocktail.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
     <h2 class="js_title">${cocktail.strDrink}</h2>
     <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
     </li>`;
     } else {
-      listCocktail.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
+      listCocktail.innerHTML += `<li class="js_liElement selected" id=${cocktail.idDrink}>
     <h2 class="js_title">${cocktail.strDrink}</h2>
-    <img src="https://www.drinksco.es/blog/assets/uploads/sites/2/2020/05/cocktail-3327242_1920-1170x780.jpg" class="cocktail_img" title="${cocktail.strDrink}"/>
+    <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
     </li>`;
     }
+
     addEventToCocktails();
   }
 }
@@ -87,7 +91,8 @@ function renderFavorite(listFavourite) {
   }
 }
 
-//function handleClickFavouriteX(ev) {}
+//funcion selected para dar click sobre imagen e incluirla en lista de favoritos, aquí es donde la imagen se pone de un color diferente.
+//falta que se quede en ese color al cambiar de cocktail y volver a la misma lista???
 
 function handleClick(ev) {
   const idSelectedCocktail = ev.currentTarget.id;
@@ -124,7 +129,7 @@ function addEventToCocktails() {
 function handleClickBtnReset(ev) {
   ev.preventDefault();
   inputElement.value = '';
-  location.reload(); //lleva la pagina a default.
+  location.reload();
 }
 
 //funcion para que al dar a la basurita se elimine la lista de favoritos y queda la pagina por defecto
@@ -140,5 +145,8 @@ function handleClickResetBtnFav(ev) {
 //eventos
 searchBtn.addEventListener('click', handleClickBtn);
 resetBtn.addEventListener('click', handleClickBtnReset);
-
 resetBtnFav.addEventListener('click', handleClickResetBtnFav);
+/*listCocktail.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
+<h2 class="js_title">${cocktail.strDrink}</h2>
+<img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
+</li>`;*/

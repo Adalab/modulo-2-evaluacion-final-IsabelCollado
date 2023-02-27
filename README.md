@@ -1,17 +1,17 @@
-# Módulo 2- Evalucíon Final
+# Módulo 2- Evaluacíon Final
 
 ## Buscador de Cócteles 🍹 
 
-En está evaluación del modulo 2 JS, nos han solicitado la creación de una Web para buscar cócteles, con listado por defecto y un listado para favoritos.
+En esta evaluación del módulo 2 JS, nos han solicitado la creación de una Web para buscar cócteles, con listado por defecto y un listado para favoritos.
 
 ## Comenzando 🚀
 
 He incluido
 
-. un input donde la usuaria puede buscar el nombre del coctel que quiere.
+. un input donde la usuaria puede buscar el nombre del cóctel que quiere.
 . un botón de buscar.
 
-. un boton de reset que elimina lo escrito en el input por la usuaria y deja por defecto la lista de cócteles.
+. un botón de reset que elimina lo escrito en el input por la usuaria y deja por defecto la lista de cócteles.
 
 . dos listados, uno para el listado de cócteles que se buscan y el otro listado es donde vamos agregando los cócteles favoritos.
 

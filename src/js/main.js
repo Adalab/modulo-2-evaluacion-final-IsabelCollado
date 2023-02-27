@@ -65,12 +65,12 @@ function renderResultCocktail(listCocktail) {
     );
     if (indexCocktail === -1) {
       listCocktail.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
-    <h2 class="js_title">${cocktail.strDrink}</h2>
+    <h2 class="js_title title_cocktail">${cocktail.strDrink}</h2>
     <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
     </li>`;
     } else {
       listCocktail.innerHTML += `<li class="js_liElement selected" id=${cocktail.idDrink}>
-    <h2 class="js_title">${cocktail.strDrink}</h2>
+    <h2 class="js_title ">${cocktail.strDrink}</h2>
     <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
     </li>`;
     }
@@ -85,7 +85,7 @@ function renderFavorite(listFavourite) {
   listFavourite.innerHTML = '';
   for (const cocktail of listFavouriteData) {
     listFavourite.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
-    <h2 class="js_title">${cocktail.strDrink}</h2>
+    <h2 class="js_title title_cocktail">${cocktail.strDrink}</h2>
     <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
     </li>`;
   }

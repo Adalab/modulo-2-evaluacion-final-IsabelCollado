@@ -2,8 +2,6 @@
     width: 100vw;
     height: 100vh;
     padding: 20px 20px;
-    display: flex;
-    flex-direction:column;
     
 }
 .search{
@@ -46,13 +44,13 @@
     height: 25px;
 
 }
+.list-section{
 
-.list{
-    padding-right: 100px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
-    align-items: flex-end;
+
+
 }
 
 
@@ -64,9 +62,7 @@
     
 }
 .list_title{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 50px;
     font-family: 'Poppins', sans-serif;
     font-size: 20px;
 
@@ -80,10 +76,15 @@
 
 .cocktail_img{
 
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     padding: 10px 10px;
     
+}
+.title_cocktail{
+font-size: 18px;
+font-family:'Poppins', sans-serif;
+
 }
 
 .reset_fav{

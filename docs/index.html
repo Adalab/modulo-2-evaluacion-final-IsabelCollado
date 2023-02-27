@@ -3,48 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Cocktails</title>
+    <title>Módulo 2 Evalucación Final - Isabel Collado</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/main.css" />
     <link rel="icon" href="./assets/images/favicon.png" />
   </head>
 
   <body>
-    <div class="page">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
       <header class="header">
-        <h1>Buscador Cócteles</h1>
+        <h1 class="h1-header">Buscador de Cócteles<img src="./assets/images/icons8-coconut-cocktail-48.png" alt="image-coconut" class="img_header"></h1>
       </header>
 
       <main class="main">
 
         <section class="search js_search">
-        
-            <form action="#">
-                <input type="text" class="js_input_element input-element" placeholder="margarita">
-                <input type="button" value="Buscar" class="js_search search-btn">
-                <input type="button" value="Reset" class="js_reset_btn btn-reset">
+            <form class="#">
+              <label for="input" class="search_label">Buscador:</label>
+                <input type="text" id="input" class="js_input_element input-element" placeholder="Ej: margarita">
+              </label>
+                <label for="search">
+                <input type="button" value="Buscar" id="search" class="js_search search-btn">
+              </label>
+              <label for="search">
+                <input type="button" id="reset" value="Reset" class="js_reset_btn btn-reset">
+              </label>
             </form>
-        
         </section>
         
-        
-        <section class="favourites">
-            <h2>Mis Cócteles Favoritos</h2>
+
+        <section class="list-section">
+          <div class="one_div">
+            <h2 class="h2_title">Mis Cócteles Favoritos</h2>
             <ul class="favorite_cocktail js_favorite"></ul>
+            <button class="reset_fav js_reset_fav hidden"><img src=./assets/images/36_104857.png class="img_trash " alt="image-trash"/></button>
+          </div>
+          <div class="two_div">
+            <h2 class="list_title">Lista Cócteles</h2>
+            <ul class="list_cocktail js_list_cocktail"></ul>
+          </div>
         </section>
-        
-        <section class="list">
-            <h2>Lista Cócteles</h2>
-            <ul class="list_cocktel js_list_cocktails"></ul>
-        </section>
+
         
         </main>
 
       <footer class="page__footer">
+
+          <!--<p>Creada por alumna Adalab | Isabel Collado Herrera 2023</p>-->
         
       </footer>
 
-    </div>
     <script src="./assets/js/main.js"></script>
   </body>
 </html>

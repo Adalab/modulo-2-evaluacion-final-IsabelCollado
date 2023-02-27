@@ -25,7 +25,7 @@ if (cocktailStored) {
   renderFavorite(listFavourite);
 }
 
-//Fetch obtener los datos de la lista de margaritas al abrir la página.
+//Fetch obtener los datos de la lista de margaritas al abrir la página y guarada en el localS.
 
 const listDataStored = JSON.parse(localStorage.getItem('coctail'));
 if (listDataStored) {
@@ -56,7 +56,7 @@ function handleClickBtn(ev) {
     });
 }
 
-//función para recorrer y pintar los li  en html y si no encuentra la imagen pone una por defecto.
+//función para recorrer y pintar los li  en html y deja pintada la seleccionada incluida en fav
 function renderResultCocktail(listCocktail) {
   listCocktail.innerHTML = '';
   for (const cocktail of listCocktailData) {
@@ -92,7 +92,6 @@ function renderFavorite(listFavourite) {
 }
 
 //funcion selected para dar click sobre imagen e incluirla en lista de favoritos, aquí es donde la imagen se pone de un color diferente.
-//falta que se quede en ese color al cambiar de cocktail y volver a la misma lista???
 
 function handleClick(ev) {
   const idSelectedCocktail = ev.currentTarget.id;
@@ -102,7 +101,7 @@ function handleClick(ev) {
   const indexCocktail = listFavouriteData.findIndex(
     (cocktail) => cocktail.idDrink === idSelectedCocktail
   );
-  //aquí se comprueba si esta en fav, -1 es no.
+  //aquí se comprueba si esta en fav, -1 es no, es decir que lo pintes
   if (indexCocktail === -1) {
     //push para guardar en el listado
     ev.currentTarget.classList.add('selected');
@@ -146,7 +145,3 @@ function handleClickResetBtnFav(ev) {
 searchBtn.addEventListener('click', handleClickBtn);
 resetBtn.addEventListener('click', handleClickBtnReset);
 resetBtnFav.addEventListener('click', handleClickResetBtnFav);
-/*listCocktail.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
-<h2 class="js_title">${cocktail.strDrink}</h2>
-<img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
-</li>`;*/

@@ -90,7 +90,7 @@ function renderFavorite(listFavourite) {
     listFavourite.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
     <h2 class="js_title title_cocktail">${cocktail.strDrink}</h2>
     <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
-    <p class= "js_ingredients">${cocktail.strIngredient}</p>
+    <p class= "js_ingredients">${cocktail.strIngredient1}</p>
     </li>`;
   }
 }

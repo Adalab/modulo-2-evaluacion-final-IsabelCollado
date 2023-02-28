@@ -3,7 +3,7 @@
 //Variables y constantes
 
 const inputElement = document.querySelector('.js_input_element');
-const parElement = document.querySelectorAll('.js-p-fav');
+//const parElement = document.querySelectorAll('.js-p-fav');
 const searchBtn = document.querySelector('.js_search');
 const resetBtn = document.querySelector('.js_reset_btn');
 const logBtn = document.querySelector('.js_log_btn');
@@ -90,7 +90,7 @@ function renderFavorite(listFavourite) {
     listFavourite.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
     <h2 class="js_title title_cocktail">${cocktail.strDrink}</h2>
     <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
-    <p class= "js_ingredients">${cocktail.strIngredient1}</p>
+    <p class= "js_ingredients">${cocktail.strIngredient}</p>
     </li>`;
   }
 }
@@ -137,7 +137,7 @@ function handleClickBtnReset(ev) {
 
 function handleClickBtnLog(ev) {
   ev.preventDefault();
-  console.log(`tiene ${listFavouriteData.length}`);
+  //console.log(`tiene ${listFavouriteData.length}`);
 }
 //funcion para que al dar a la basurita se elimine la lista de favoritos y queda la pagina por defecto
 function handleClickResetBtnFav(ev) {

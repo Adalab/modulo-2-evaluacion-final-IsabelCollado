@@ -69,12 +69,13 @@ function renderResultCocktail(listCocktail) {
       listCocktail.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
     <h2 class="js_title title_cocktail">${cocktail.strDrink}</h2>
     <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
-    <p class= "js_ingredients">${cocktail.strIngredient1}</p>
+    <p class= "js_ingredients">${cocktail.strIngredient1},${cocktail.strIngredient2}, ${cocktail.strIngredient3} </p>
     </li>`;
     } else {
       listCocktail.innerHTML += `<li class="js_liElement selected" id=${cocktail.idDrink}>
     <h2 class="js_title ">${cocktail.strDrink}</h2>
     <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
+    <p class= "js_ingredients">${cocktail.strIngredient1},${cocktail.strIngredient2}, ${cocktail.strIngredient3} </p>
     </li>`;
     }
 

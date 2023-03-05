@@ -3,8 +3,10 @@
 //Variables y constantes
 
 const inputElement = document.querySelector('.js_input_element');
+//const parElement = document.querySelectorAll('.js-p-fav');
 const searchBtn = document.querySelector('.js_search');
 const resetBtn = document.querySelector('.js_reset_btn');
+const logBtn = document.querySelector('.js_log_btn');
 const resetBtnFav = document.querySelector('.js_reset_fav');
 const listFavourite = document.querySelector('.js_favorite');
 const listCocktail = document.querySelector('.js_list_cocktail');
@@ -67,6 +69,7 @@ function renderResultCocktail(listCocktail) {
       listCocktail.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
     <h2 class="js_title title_cocktail">${cocktail.strDrink}</h2>
     <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
+    <p class= "js_ingredients">${cocktail.strIngredient1}</p>
     </li>`;
     } else {
       listCocktail.innerHTML += `<li class="js_liElement selected" id=${cocktail.idDrink}>
@@ -87,6 +90,7 @@ function renderFavorite(listFavourite) {
     listFavourite.innerHTML += `<li class="js_liElement" id=${cocktail.idDrink}>
     <h2 class="js_title title_cocktail">${cocktail.strDrink}</h2>
     <img src=${cocktail.strDrinkThumb} class="cocktail_img" title="${cocktail.strDrink}"/>
+    <p class= "js_ingredients">${cocktail.strIngredient1}</p>
     </li>`;
   }
 }
@@ -131,6 +135,10 @@ function handleClickBtnReset(ev) {
   location.reload();
 }
 
+function handleClickBtnLog(ev) {
+  ev.preventDefault();
+  //console.log(`tiene ${listFavouriteData.length}`);
+}
 //funcion para que al dar a la basurita se elimine la lista de favoritos y queda la pagina por defecto
 function handleClickResetBtnFav(ev) {
   ev.preventDefault();
@@ -145,3 +153,4 @@ function handleClickResetBtnFav(ev) {
 searchBtn.addEventListener('click', handleClickBtn);
 resetBtn.addEventListener('click', handleClickBtnReset);
 resetBtnFav.addEventListener('click', handleClickResetBtnFav);
+logBtn.addEventListener('click', handleClickBtnLog);
